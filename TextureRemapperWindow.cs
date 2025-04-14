@@ -17,7 +17,7 @@ namespace Assets.NnUtils.Modules.TextureRemapper
         [MenuItem("Assets/Texture Remapper", true)]
         private static bool ValidateContextOption() => Selection.objects.All(o => o is Texture2D);
 
-        [MenuItem("Assets/Texture Remapper")]
+        [MenuItem("Assets/Texture Remapper", priority = -10)]
         private static void OpenWithSelection()
         {
             var window = GetWindow<TextureRemapperWindow>("Texture Remapper");

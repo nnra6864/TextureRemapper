@@ -108,10 +108,10 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             Object.DestroyImmediate(outputTexture);
 
             // Selects the newly created file if it's in the current project
-            string dataPath = Application.dataPath;
+            var dataPath = Application.dataPath;
             if (newPath.StartsWith(dataPath))
             {
-                var relativePath = "Assets" + newPath.Substring(dataPath.Length);
+                var relativePath = "Assets" + newPath[dataPath.Length..];
                 Selection.activeObject = AssetDatabase.LoadAssetAtPath<Texture2D>(relativePath);
             }
         }

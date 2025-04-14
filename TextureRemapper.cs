@@ -54,13 +54,11 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             {
                 // Texture Input
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-                EditorGUILayout.BeginHorizontal();
-                _textureMappings[i].Texture = (Texture2D)EditorGUILayout.ObjectField("",
-                    _textureMappings[i].Texture, typeof(Texture2D), false, GUILayout.Width(65));
                 EditorGUILayout.LabelField(_textureMappings[i].Texture
                     ? _textureMappings[i].Texture.name
                     : $"Texture {i + 1}");
-                EditorGUILayout.EndHorizontal();
+                _textureMappings[i].Texture = (Texture2D)EditorGUILayout.ObjectField("",
+                    _textureMappings[i].Texture, typeof(Texture2D), false, GUILayout.Width(65));
             
                 EditorGUILayout.LabelField("Channel Mappings", EditorStyles.boldLabel);
 

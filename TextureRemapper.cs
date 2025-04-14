@@ -16,7 +16,7 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             public string Path;
         }
 
-        public static void RemapTextures(List<TextureMapping> textureMappings, string outputName)
+        public static void RemapTextures(List<TextureMapping> textureMappings)
         {
             if (textureMappings.Count == 0 || !textureMappings[0].Texture)
             {
@@ -87,17 +87,9 @@ namespace Assets.NnUtils.Modules.TextureRemapper
 
             var path = AssetDatabase.GetAssetPath(textureMappings[0].Texture);
             var directory = Path.GetDirectoryName(path);
-            var newPath = Path.Combine(directory, $"{outputName}.png");
-            if (File.Exists(newPath))
-            {
-                var replace = EditorUtility.DisplayDialog(
-                    "File Exists",
-                    $"A file named \"{outputName}\" already exists. Do you want to replace it?",
-                    "Replace",
-                    "Cancel"
-                );
-                if (!replace) return;
-            }
+            var newPath = EditorUtility.SaveFilePanel(
+                "Save Remapped Texture", directory, "RemappedTexture", "png");
+            if (string.IsNullOrEmpty(newPath)) return;
 
             File.WriteAllBytes(newPath, outputTexture.EncodeToPNG());
             AssetDatabase.Refresh();

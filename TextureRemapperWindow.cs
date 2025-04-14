@@ -41,6 +41,9 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             for (int i = 0; i < _textureMappings.Count; i++)
             {
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                EditorGUILayout.LabelField(_textureMappings[i].Texture
+                    ? _textureMappings[i].Texture.name
+                    : $"Texture {i + 1}");
                 _textureMappings[i].Texture = (Texture2D)EditorGUILayout.ObjectField("",
                     _textureMappings[i].Texture, typeof(Texture2D), false, GUILayout.Width(65));
 
@@ -104,17 +107,18 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             if (GUILayout.Button("Add Texture", GUILayout.Width(120)))
                 _textureMappings.Add(new());
 
+            GUILayout.Space(10);
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUI.enabled = ValidateInputs();
+            if (GUILayout.Button("Create Texture", GUILayout.Width(150), GUILayout.Height(30)))
+                TextureRemapper.RemapTextures(_textureMappings);
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            
             EditorGUILayout.EndScrollView();
             EditorGUILayout.Space();
-
-            EditorGUILayout.BeginHorizontal();
-            _outputName = EditorGUILayout.TextField("Output Name", _outputName);
-
-            GUI.enabled = ValidateInputs();
-            if (GUILayout.Button("Create Remapped Texture"))
-                TextureRemapper.RemapTextures(_textureMappings, _outputName);
-
-            EditorGUILayout.EndHorizontal();
+            
             GUI.enabled = true;
         }
 

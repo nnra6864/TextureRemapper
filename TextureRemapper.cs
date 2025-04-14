@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.NnUtils.Scripts.Editor
+namespace Assets.NnUtils.Modules.TextureRemapper
 {
     public class TextureRemapper : EditorWindow
     {
@@ -54,8 +54,13 @@ namespace Assets.NnUtils.Scripts.Editor
             {
                 // Texture Input
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                EditorGUILayout.BeginHorizontal();
                 _textureMappings[i].Texture = (Texture2D)EditorGUILayout.ObjectField("",
                     _textureMappings[i].Texture, typeof(Texture2D), false, GUILayout.Width(65));
+                EditorGUILayout.LabelField(_textureMappings[i].Texture
+                    ? _textureMappings[i].Texture.name
+                    : $"Texture {i + 1}");
+                EditorGUILayout.EndHorizontal();
             
                 EditorGUILayout.LabelField("Channel Mappings", EditorStyles.boldLabel);
 
@@ -137,6 +142,21 @@ namespace Assets.NnUtils.Scripts.Editor
             if (GUILayout.Button("Create Remapped Texture")) CreateRemappedTexture();
             EditorGUILayout.EndHorizontal();
             GUI.enabled = true;
+        }
+        
+        public void InitializeWithTextures(List<Texture2D> textures)
+        {
+            _textureMappings.Clear();
+
+            foreach (var tex in textures)
+                _textureMappings.Add(new()
+                {
+                    Texture         = tex,
+                    ChannelMappings = new() { new() }
+                });
+
+            _scrollPosition = Vector2.zero;
+            Repaint();
         }
 
         private bool ValidateInputs() =>

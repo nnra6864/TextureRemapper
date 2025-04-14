@@ -31,15 +31,15 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             int width = 0, height = 0;
             foreach (var mapping in textureMappings.Where(m => m.Texture))
             {
-                width = Mathf.Max(width, mapping.Texture.width);
+                width  = Mathf.Max(width, mapping.Texture.width);
                 height = Mathf.Max(height, mapping.Texture.height);
             }
 
             Texture2D outputTexture = new(width, height, TextureFormat.RGBA32, false);
             Color defaultColor = new(0, 0, 0, 1);
             for (int y = 0; y < height; y++)
-                for (int x = 0; x < width; x++)
-                    outputTexture.SetPixel(x, y, defaultColor);
+            for (int x = 0; x < width; x++)
+                outputTexture.SetPixel(x, y, defaultColor);
 
             foreach (var mapping in textureMappings)
             {
@@ -100,13 +100,20 @@ namespace Assets.NnUtils.Modules.TextureRemapper
             var newImporter = AssetImporter.GetAtPath(newPath) as TextureImporter;
             if (newImporter)
             {
-                newImporter.isReadable = false;
+                newImporter.isReadable  = false;
                 newImporter.sRGBTexture = false;
                 AssetDatabase.ImportAsset(newPath);
             }
 
             Object.DestroyImmediate(outputTexture);
-            Selection.activeObject = AssetDatabase.LoadAssetAtPath<Texture2D>(newPath);
+
+            // Selects the newly created file if it's in the current project
+            string dataPath = Application.dataPath;
+            if (newPath.StartsWith(dataPath))
+            {
+                var relativePath = "Assets" + newPath.Substring(dataPath.Length);
+                Selection.activeObject = AssetDatabase.LoadAssetAtPath<Texture2D>(relativePath);
+            }
         }
 
         private static TextureSettings MakeTextureReadable(Texture2D texture)

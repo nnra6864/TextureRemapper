@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.NnUtils.Modules.TextureRemapper
+namespace Assets.NnUtils.Modules.TextureRemapper.Editor
 {
     public static class TextureRemapper
     {

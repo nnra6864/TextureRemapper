@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.NnUtils.Modules.TextureRemapper
+namespace Assets.NnUtils.Modules.TextureRemapper.Editor
 {
     [System.Serializable]
     public class TextureMapping

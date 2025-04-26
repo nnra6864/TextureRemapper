@@ -1,4 +1,4 @@
-namespace Assets.NnUtils.Modules.TextureRemapper
+namespace Assets.NnUtils.Modules.TextureRemapper.Editor
 {
     [System.Serializable]
     public class ChannelMapping

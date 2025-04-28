@@ -1,23 +1,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
-namespace Assets.NnUtils.Modules.TextureRemapper.Editor
+namespace NnUtils.Modules.TextureRemapper.Editor
 {
     public class TextureRemapperWindow : EditorWindow
     {
         private List<TextureMapping> _textureMappings = new();
         private string _outputName = "RemappedTexture";
         private Vector2 _scrollPosition;
-
+        
         [MenuItem("NnUtils/Texture Remapper")]
-        public static void ShowWindow() => GetWindow<TextureRemapperWindow>("Texture Remapper");
+        [Shortcut("NnUtils/Texture Remapper", KeyCode.R, ShortcutModifiers.Alt)]
+        public static void ShowWindow()
+        {
+            if (ValidateContextOption()) OpenWithSelection();
+            else GetWindow<TextureRemapperWindow>("Texture Remapper");
+        }
 
-        [MenuItem("Assets/Texture Remapper", true)]
+        [MenuItem("Assets/NnUtils/Texture Remapper", true)]
         private static bool ValidateContextOption() => Selection.objects.All(o => o is Texture2D);
 
-        [MenuItem("Assets/Texture Remapper", priority = -10)]
+        [MenuItem("Assets/NnUtils/Texture Remapper", priority = -10)]
         private static void OpenWithSelection()
         {
             var window = GetWindow<TextureRemapperWindow>("Texture Remapper");

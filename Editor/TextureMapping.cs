@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,3 +18,5 @@ namespace NnUtils.Modules.TextureRemapper.Editor
         }
     }
 }
+
+#endif

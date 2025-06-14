@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -11,7 +13,7 @@ namespace NnUtils.Modules.TextureRemapper.Editor
         private List<TextureMapping> _textureMappings = new();
         private string _outputName = "RemappedTexture";
         private Vector2 _scrollPosition;
-        
+
         [MenuItem("NnUtils/Texture Remapper")]
         [Shortcut("NnUtils/Texture Remapper", KeyCode.R, ShortcutModifiers.Alt)]
         public static void ShowWindow()
@@ -121,10 +123,10 @@ namespace NnUtils.Modules.TextureRemapper.Editor
                 TextureRemapper.RemapTextures(_textureMappings);
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-            
+
             EditorGUILayout.EndScrollView();
             EditorGUILayout.Space();
-            
+
             GUI.enabled = true;
         }
 
@@ -133,3 +135,5 @@ namespace NnUtils.Modules.TextureRemapper.Editor
             _textureMappings.All(m => m.Texture && m.ChannelMappings.Count != 0);
     }
 }
+
+#endif

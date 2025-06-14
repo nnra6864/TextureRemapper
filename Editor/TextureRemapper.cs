@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,15 +33,15 @@ namespace NnUtils.Modules.TextureRemapper.Editor
             int width = 0, height = 0;
             foreach (var mapping in textureMappings.Where(m => m.Texture))
             {
-                width  = Mathf.Max(width, mapping.Texture.width);
+                width = Mathf.Max(width, mapping.Texture.width);
                 height = Mathf.Max(height, mapping.Texture.height);
             }
 
             Texture2D outputTexture = new(width, height, TextureFormat.RGBA32, false);
             Color defaultColor = new(0, 0, 0, 1);
             for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-                outputTexture.SetPixel(x, y, defaultColor);
+                for (int x = 0; x < width; x++)
+                    outputTexture.SetPixel(x, y, defaultColor);
 
             foreach (var mapping in textureMappings)
             {
@@ -100,7 +102,7 @@ namespace NnUtils.Modules.TextureRemapper.Editor
             var newImporter = AssetImporter.GetAtPath(newPath) as TextureImporter;
             if (newImporter)
             {
-                newImporter.isReadable  = false;
+                newImporter.isReadable = false;
                 newImporter.sRGBTexture = false;
                 AssetDatabase.ImportAsset(newPath);
             }
@@ -149,3 +151,5 @@ namespace NnUtils.Modules.TextureRemapper.Editor
         }
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 namespace NnUtils.Modules.TextureRemapper.Editor
 {
     [System.Serializable]
@@ -8,3 +10,5 @@ namespace NnUtils.Modules.TextureRemapper.Editor
         public int OutputChannel;
     }
 }
+
+#endif
